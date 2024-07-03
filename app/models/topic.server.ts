@@ -4,13 +4,10 @@ import { prisma } from "~/db.server";
 
 export function getTopic({
   id,
-  userId,
-}: Pick<Topic, "id"> & {
-  userId: User["id"];
-}) {
+}: Pick<Topic, "id">) {
   return prisma.topic.findFirst({
     select: { id: true, body: true, title: true },
-    where: { id, userId },
+    where: { id },
   });
 }
 
