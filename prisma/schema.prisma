@@ -15,7 +15,10 @@ model User {
   updatedAt DateTime @updatedAt
 
   password Password?
-  notes    Note[]
+  topics   Topic[]
+  replies  Reply[]
+  upvotes  Upvote[]
+  follows  Follow[]
 }
 
 model Password {
@@ -25,7 +28,7 @@ model Password {
   userId String @unique
 }
 
-model Note {
+model Topic {
   id    String @id @default(cuid())
   title String
   body  String
@@ -35,4 +38,48 @@ model Note {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
+
+  replies  Reply[]
+  upvotes  Upvote[]
+  follows  Follow[]
+}
+
+model Reply {
+  id    String @id @default(cuid())
+  body  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  topic   Topic   @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  topicId String
+}
+
+model Upvote {
+  id    String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  topic   Topic   @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  topicId String
+}
+
+model Follow {
+  id    String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  topic   Topic   @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  topicId String
 }

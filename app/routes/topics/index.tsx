@@ -1,7 +1,6 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { json, LoaderFunctionArgs } from "@remix-run/node";
 
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { getTopicListItems } from "~/models/topic.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
@@ -23,14 +22,14 @@ export default function TopicsPage() {
           <Link to=".">Discussions</Link>
         </h1>
         <p>{user.email}</p>
-        <Form action="/logout" method="post">
+        <form action="/logout" method="post">
           <button
             type="submit"
             className="rounded bg-slate-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
           >
             Logout
           </button>
-        </Form>
+        </form>
       </header>
 
       <main className="flex h-full bg-white">
@@ -47,14 +46,12 @@ export default function TopicsPage() {
             <ol>
               {data.topicListItems.map((topic) => (
                 <li key={topic.id}>
-                  <NavLink
-                    className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
+                  <Link
+                    className="block border-b p-4 text-xl"
                     to={topic.id}
                   >
                     🗨️ {topic.title}
-                  </NavLink>
+                  </Link>
                 </li>
               ))}
             </ol>
