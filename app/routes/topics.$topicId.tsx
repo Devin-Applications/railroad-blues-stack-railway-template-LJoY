@@ -11,11 +11,10 @@ import invariant from "tiny-invariant";
 import { deleteTopic, getTopic } from "~/models/topic.server";
 import { requireUserId } from "~/session.server";
 
-export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const userId = await requireUserId(request);
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.topicId, "topicId not found");
 
-  const topic = await getTopic({ id: params.topicId, userId });
+  const topic = await getTopic({ id: params.topicId });
   if (!topic) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -45,6 +44,21 @@ export default function TopicDetailsPage() {
           className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
         >
           Delete
+        </button>
+      </Form>
+      <hr className="my-4" />
+      <h4 className="text-xl font-bold">Replies</h4>
+      <Form method="post" action={`/topics/${data.topic.id}/replies`}>
+        <textarea
+          name="content"
+          className="w-full rounded border border-gray-300 p-2"
+          placeholder="Write your reply here..."
+        />
+        <button
+          type="submit"
+          className="mt-2 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:bg-green-400"
+        >
+          Reply
         </button>
       </Form>
     </div>
