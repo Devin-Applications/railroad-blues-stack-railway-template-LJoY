@@ -15,6 +15,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     const topic = await getTopic({ id: topicId });
     console.log("Fetched Topic:", topic); // Logging the fetched topic
     if (!topic) {
+      console.log("Topic not found"); // Additional logging for topic not found
       throw new Response("Topic not found", { status: 404 });
     }
     return json({ topic });

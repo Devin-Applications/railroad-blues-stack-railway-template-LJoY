@@ -5,9 +5,13 @@ import { prisma } from "~/db.server";
 export function getTopic({
   id,
 }: Pick<Topic, "id">) {
+  console.log("getTopic called with ID:", id); // Logging the input ID
   return prisma.topic.findFirst({
     select: { id: true, body: true, title: true },
     where: { id },
+  }).then(topic => {
+    console.log("getTopic result:", topic); // Logging the result of the database query
+    return topic;
   });
 }
 
