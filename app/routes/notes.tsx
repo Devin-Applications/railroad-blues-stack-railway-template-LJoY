@@ -1,6 +1,7 @@
-import { json, LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { getTopicListItems } from "~/models/topic.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
@@ -9,11 +10,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await requireUserId(request);
   const topicListItems = await getTopicListItems({ userId });
   return json({ topicListItems });
-};
-
-type Topic = {
-  id: string;
-  title: string;
 };
 
 export default function TopicsPage() {
@@ -27,14 +23,14 @@ export default function TopicsPage() {
           <Link to=".">Discussions</Link>
         </h1>
         <p>{user.email}</p>
-        <form action="/logout" method="post">
+        <Form action="/logout" method="post">
           <button
             type="submit"
             className="rounded bg-slate-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
           >
             Logout
           </button>
-        </form>
+        </Form>
       </header>
 
       <main className="flex h-full bg-white">
@@ -49,14 +45,16 @@ export default function TopicsPage() {
             <p className="p-4">No topics yet</p>
           ) : (
             <ol>
-              {data.topicListItems.map((topic: Topic) => (
+              {data.topicListItems.map((topic) => (
                 <li key={topic.id}>
-                  <Link
-                    className="block border-b p-4 text-xl"
+                  <NavLink
+                    className={({ isActive }) =>
+                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                    }
                     to={topic.id}
                   >
                     🗨️ {topic.title}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ol>
