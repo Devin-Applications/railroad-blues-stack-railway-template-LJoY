@@ -10,10 +10,9 @@ import {
 } from "@remix-run/react";
 
 import { getUser } from "~/session.server";
-import stylesheet from "~/tailwind.css";
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: "/build/tailwind.css" },
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
