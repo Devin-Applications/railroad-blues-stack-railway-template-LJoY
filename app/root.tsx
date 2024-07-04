@@ -10,10 +10,10 @@ import {
 } from "@remix-run/react";
 
 import { getUser } from "~/session.server";
-import "~/tailwind.css?__remix_sideEffect__";
+import stylesheet from "~/tailwind.css";
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: "/build/tailwind.css" },
+  { rel: "stylesheet", href: stylesheet },
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
