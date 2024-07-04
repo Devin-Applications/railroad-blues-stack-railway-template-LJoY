@@ -11,6 +11,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ topicListItems });
 };
 
+type Topic = {
+  id: string;
+  title: string;
+};
+
 export default function TopicsPage() {
   const data = useLoaderData<typeof loader>();
   const user = useUser();
@@ -44,7 +49,7 @@ export default function TopicsPage() {
             <p className="p-4">No topics yet</p>
           ) : (
             <ol>
-              {data.topicListItems.map((topic) => (
+              {data.topicListItems.map((topic: Topic) => (
                 <li key={topic.id}>
                   <Link
                     className="block border-b p-4 text-xl"
