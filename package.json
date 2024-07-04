@@ -89,6 +89,6 @@
     "node": ">=18.0.0"
   },
   "prisma": {
-    "seed": "ts-node -r tsconfig-paths/register prisma/seed.ts"
+    "seed": "node_modules/.bin/ts-node -r tsconfig-paths/register prisma/seed.ts"
   }
 }
