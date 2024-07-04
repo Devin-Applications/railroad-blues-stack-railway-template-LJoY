@@ -10,7 +10,7 @@ import {
 } from "@remix-run/react";
 
 import { getUser } from "~/session.server";
-import "~/tailwind.css";
+import "~/tailwind.css?__remix_sideEffect__";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: "/build/tailwind.css" },
